@@ -31,5 +31,5 @@ EXIT;
 # Para executar o projeto
 npm start
 
-# Cores de referência:  Open Color
+# Cores de referência:  Open Color (já uso em outros projetos meus)
 https://yeun.github.io/open-color/
