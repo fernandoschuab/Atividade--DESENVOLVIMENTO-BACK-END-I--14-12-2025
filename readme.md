@@ -33,3 +33,6 @@ npm start
 
 # Cores de referência:  Open Color (já uso em outros projetos meus)
 https://yeun.github.io/open-color/
+
+
+Submissão da tarefa realizada com sucesso. Comprovante de submissão Nº 1255294.
