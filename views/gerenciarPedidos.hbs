@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 style="color: var(--color-primary-700); font-weight: 600; letter-spacing: -0.5px;">
+    <i class="bi bi-clipboard-check"></i> Gerenciar Pedidos
+  </h1>
+  <span class="badge badge-info fs-6">
+    <i class="bi bi-cart3"></i> {{pedidos.length}} pedido(s)
+  </span>
+</div>
+
+<div class="card card-elegant shadow-sm">
+  <div class="card-body p-0">
+    {{#if pedidos.length}}
+    <div class="table-responsive">
+      <table class="table table-elegant table-hover mb-0">
+        <thead>
+          <tr>
+            <th><i class="bi bi-hash"></i> ID</th>
+            <th><i class="bi bi-calendar-plus"></i> Data Criação</th>
+            <th><i class="bi bi-person-circle"></i> Usuário</th>
+            <th><i class="bi bi-calendar-check"></i> Data Atualização</th>
+            <th><i class="bi bi-currency-dollar"></i> Valor Total</th>
+            <th><i class="bi bi-box-seam"></i> Nº Produtos</th>
+            <th><i class="bi bi-flag"></i> Status</th>
+            <th><i class="bi bi-gear"></i> Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pedidos}}
+          <tr>
+            <td class="fw-bold" style="color: var(--color-steel);">#{{this.id}}</td>
+            <td style="color: var(--color-slate); font-size: 0.9rem;">{{this.diaCriacao}}</td>
+            <td style="color: var(--color-charcoal); font-weight: 500;">{{this.nomeUsuario}}</td>
+            <td style="color: var(--color-slate); font-size: 0.9rem;">{{this.diaAtualizacao}}</td>
+            <td class="fw-bold" style="color: var(--color-success-600); font-size: 1.05rem;">R$ {{this.valorTotal}}</td>
+            <td><span class="badge badge-secondary">{{this.numProdutos}}</span></td>
+            <td>
+              {{#if (eq this.status 'CONCLUIDO')}}
+              <span class="badge badge-success">
+                <i class="bi bi-check-circle-fill"></i> Concluído
+              </span>
+              {{else if (eq this.status 'CANCELADO')}}
+              <span class="badge badge-danger">
+                <i class="bi bi-x-circle-fill"></i> Cancelado
+              </span>
+              {{else if (eq this.status 'SUSPENSO')}}
+              <span class="badge badge-warning">
+                <i class="bi bi-pause-circle-fill"></i> Suspenso
+              </span>
+              {{else}}
+              <span class="badge badge-info">
+                <i class="bi bi-hourglass-split"></i> {{this.status}}
+              </span>
+              {{/if}}
+            </td>
+            <td>
+              {{#if (eq this.status 'CANCELADO')}}
+                <span class="text-muted" style="font-size: 0.85rem;">
+                  <i class="bi bi-lock-fill"></i> Pedido cancelado
+                </span>
+              {{else}}
+                <div class="btn-group" role="group">
+                  <a href="/pedidos/{{this.id}}/CONCLUIDO" class="btn btn-success btn-sm" title="Concluir Pedido">
+                    <i class="bi bi-check-circle"></i>
+                  </a>
+                  <a href="/pedidos/{{this.id}}/SUSPENSO" class="btn btn-warning btn-sm" title="Suspender Pedido">
+                    <i class="bi bi-pause-circle"></i>
+                  </a>
+                  <a href="#" onclick="confirmarCancelamento(event, {{this.id}})" class="btn btn-danger btn-sm" title="Cancelar Pedido">
+                    <i class="bi bi-x-circle"></i>
+                  </a>
+                </div>
+              {{/if}}
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{else}}
+    <div class="alert alert-info-elegant m-4">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-info-circle me-3 fs-4"></i>
+        <div>
+          <strong>Nenhum pedido encontrado</strong>
+          <p class="mb-0 mt-1" style="font-size: 0.9rem; opacity: 0.8;">
+            Os pedidos realizados aparecerão aqui.
+          </p>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<div class="mt-4">
+  <a href="/" class="btn btn-primary btn-lg">
+    <i class="bi bi-arrow-left-circle me-2"></i> Voltar para Produtos
+  </a>
+</div>
+
+<style>
+  /* Estilo adicional elegante para esta página */
+  body {
+    background-color: var(--color-cream);
+  }
+  
+  h1 {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-elegant tbody tr:last-child {
+    border-bottom: none !important;
+  }
+  
+  /* Animação suave no hover dos botões */
+  .btn-group .btn {
+    transition: all 0.2s ease !important;
+  }
+  
+  .btn-group .btn:hover {
+    transform: scale(1.05) !important;
+  }
+</style>
+
+<script>
+  // Função para confirmar cancelamento do pedido
+  function confirmarCancelamento(event, pedidoId) {
+    event.preventDefault();
+    
+    const confirmacao = confirm(
+      '⚠️ ATENÇÃO: Cancelar Pedido\n\n' +
+      'Você tem certeza que deseja cancelar este pedido?\n\n' +
+      'Ao cancelar:\n' +
+      '• Os produtos serão devolvidos ao estoque\n' +
+      '• O status não poderá ser alterado novamente\n' +
+      '• Esta ação não pode ser desfeita\n\n' +
+      'Deseja continuar?'
+    );
+    
+    if (confirmacao) {
+      window.location.href = '/pedidos/' + pedidoId + '/CANCELADO';
+    }
+  }
+</script>

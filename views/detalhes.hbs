@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h2>{{produto.nome}}</h2>
+      </div>
+      <div class="card-body">
+        <h4 class="text-success">R$ {{produto.preco}}</h4>
+        <p>
+          <strong>Estoque disponível:</strong> 
+          {{#if produto.estoque}}
+            <span class="badge badge-success">{{produto.estoque}} unidades</span>
+          {{else}}
+            <span class="badge badge-danger">Esgotado</span>
+          {{/if}}
+        </p>
+        
+        <h5 class="mt-4">Detalhes do Produto:</h5>
+        <ul class="list-group list-group-flush">
+          {{#each (lookup produto 'detalhes')}}
+          <li class="list-group-item"><strong>{{@key}}:</strong> {{this}}</li>
+          {{/each}}
+        </ul>
+
+        <div class="mt-4">
+          {{#if produto.estoque}}
+            <a href="/comprar/{{produto._id}}" class="btn btn-success btn-lg">
+              <i class="bi bi-cart-check"></i> Comprar Agora
+            </a>
+          {{else}}
+            <button class="btn btn-secondary btn-lg" disabled>
+              <i class="bi bi-cart-x"></i> Produto Indisponível
+            </button>
+          {{/if}}
+          <a href="/" class="btn btn-outline-primary btn-lg">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

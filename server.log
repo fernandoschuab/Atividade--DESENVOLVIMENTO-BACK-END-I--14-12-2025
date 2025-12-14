@@ -1,0 +1,36 @@
+Executing (default): SELECT 1+1 AS result
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Usuario' AND TABLE_SCHEMA = 'ecommerce'
+Conexão com banco de dados relacional estabelecida com sucesso.
+Executing (default): SHOW FULL COLUMNS FROM `Usuario`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Usuario' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='ecommerce' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `Usuario` CHANGE `nome` `nome` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `Usuario` CHANGE `email` `email` VARCHAR(255) NOT NULL UNIQUE;
+Executing (default): ALTER TABLE `Usuario` CHANGE `senha` `senha` VARCHAR(255) NOT NULL;
+Conexão com banco de dados não relacional estabelecida com sucesso.
+Executing (default): ALTER TABLE `Usuario` CHANGE `criado_em` `criado_em` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `Usuario` CHANGE `atualizado_em` `atualizado_em` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `Usuario`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Pedido' AND TABLE_SCHEMA = 'ecommerce'
+Executing (default): SHOW FULL COLUMNS FROM `Pedido`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'Pedido' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='ecommerce' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `Pedido` CHANGE `status` `status` VARCHAR(255) NOT NULL DEFAULT 'PENDENTE';
+Executing (default): ALTER TABLE `Pedido` CHANGE `valor_total` `valor_total` FLOAT NOT NULL DEFAULT 0;
+Executing (default): ALTER TABLE `Pedido` CHANGE `criado_em` `criado_em` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `Pedido` CHANGE `atualizado_em` `atualizado_em` DATETIME NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='Pedido' AND constraint_name = 'pedido_ibfk_1' AND TABLE_SCHEMA = 'ecommerce';
+Executing (default): ALTER TABLE `Pedido` DROP FOREIGN KEY `pedido_ibfk_1`;
+Executing (default): ALTER TABLE `Pedido` ADD FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+Executing (default): SHOW INDEX FROM `Pedido`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'ItemPedido' AND TABLE_SCHEMA = 'ecommerce'
+Executing (default): SHOW FULL COLUMNS FROM `ItemPedido`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'ItemPedido' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='ecommerce' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `ItemPedido` CHANGE `quantidade` `quantidade` INTEGER NOT NULL;
+Executing (default): ALTER TABLE `ItemPedido` CHANGE `preco_unitario` `preco_unitario` FLOAT NOT NULL;
+Executing (default): ALTER TABLE `ItemPedido` CHANGE `produto_mongodb_id` `produto_mongodb_id` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `ItemPedido` CHANGE `criado_em` `criado_em` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `ItemPedido` CHANGE `atualizado_em` `atualizado_em` DATETIME NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='ItemPedido' AND constraint_name = 'itempedido_ibfk_1' AND TABLE_SCHEMA = 'ecommerce';
+Executing (default): ALTER TABLE `ItemPedido` DROP FOREIGN KEY `itempedido_ibfk_1`;
+Executing (default): ALTER TABLE `ItemPedido` ADD FOREIGN KEY (`pedido_id`) REFERENCES `Pedido` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+Executing (default): SHOW INDEX FROM `ItemPedido`
+Modelos relacionais sincronizados com o banco de dados.
